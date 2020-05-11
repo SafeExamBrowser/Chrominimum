@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
-        <Component Id="ShortcutComponent" Directory="StartMenuDirectory">
-            <Shortcut Id="ApplicationShortcut" Name="Chrominimum" Icon="ApplicationIcon" IconIndex="0" Advertise="no" Directory="ProgramMenuFolder"
+        <Component Id="ShortcutComponent" Directory="ProgramMenuFolder">
+            <Shortcut Id="ApplicationShortcut" Name="Chrominimum" Icon="ApplicationIcon" IconIndex="0" Advertise="no"
                       Target="[InstallFolder]\$(var.Chrominimum.TargetFileName)" WorkingDirectory="InstallFolder"
                       Description="Starts the Chrominimum browser." />
-            <RemoveFolder Id="RemoveStartMenuDirectory" On="uninstall" />
             <RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]" Name="installed" Type="integer" Value="1" KeyPath="yes" />
         </Component>
     </Fragment>

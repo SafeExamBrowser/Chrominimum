@@ -10,9 +10,7 @@
             <Directory Id="$(var.PlatformProgramFilesFolder)">
                 <Directory Id="InstallFolder" Name="Chrominimum" />
             </Directory>
-            <Directory Id="ProgramMenuFolder">
-                <Directory Id="StartMenuDirectory" Name="Chrominimum" />
-            </Directory>
+            <Directory Id="ProgramMenuFolder" />
         </Directory>
     </Fragment>
 </Wix>
