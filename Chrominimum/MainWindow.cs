@@ -63,7 +63,10 @@ namespace Chrominimum
 
 		private void Browser_LoadError(object sender, LoadErrorEventArgs e)
 		{
-			e.Frame.LoadHtml($"<html><body>Failed to load '{e.FailedUrl}'!<br />{e.ErrorText} ({e.ErrorCode})</body></html>");
+			if (e.ErrorCode != CefErrorCode.None && e.ErrorCode != CefErrorCode.Aborted)
+			{
+				e.Frame.LoadHtml($"<html><body>Failed to load '{e.FailedUrl}'!<br />{e.ErrorText} ({e.ErrorCode})</body></html>");
+			}
 		}
 	}
 }
