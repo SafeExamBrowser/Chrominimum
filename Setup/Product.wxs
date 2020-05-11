@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Product Name="Chrominimum ($(var.Platform))" Manufacturer="ETH Zürich" Language="1033" Codepage="1252"
+             Id="*" Version="!(bind.fileVersion.MainExecutable)" UpgradeCode="78A256E3-9831-4AAA-8270-DB58A6C940BD">
+        <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+        <MediaTemplate EmbedCab="yes" />
+        <UIRef Id="WixUI_Minimal" />
+        <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." AllowSameVersionUpgrades="yes" />
+        <Icon Id="ApplicationIcon" SourceFile="Resources\Application.ico" />
+        <Property Id="ARPPRODUCTICON" Value="ApplicationIcon" />
+        <WixVariable Id="WixUILicenseRtf" Value="Resources\License.rtf" />
+        <Feature Id="ProductFeature" Title="Chrominimum" Level="1">
+            <ComponentGroupRef Id="ApplicationComponents" />
+            <ComponentRef Id="ShortcutComponent" />
+        </Feature>
+    </Product>
+</Wix>
