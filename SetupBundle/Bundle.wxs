@@ -4,7 +4,8 @@
             UpgradeCode="D0ADF8A5-2289-4643-9AA9-2A290FCFE03F" IconSourceFile="$(var.Setup.ProjectDir)Resources\Application.ico">
         <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLargeLicense">
             <bal:WixStandardBootstrapperApplication LicenseFile="$(var.Setup.ProjectDir)Resources\License.rtf" ThemeFile="Resources\Theme.xml"
-                                                    LocalizationFile="Resources\Theme.wxl" SuppressOptionsUI="yes" SuppressRepair="yes" />
+                                                    LocalizationFile="Resources\Theme.wxl" LogoFile="Resources\Logo.png" SuppressOptionsUI="yes"
+                                                    SuppressRepair="yes" />
         </BootstrapperApplicationRef>
         <Chain>
             <PackageGroupRef Id="DotNetFramework" />

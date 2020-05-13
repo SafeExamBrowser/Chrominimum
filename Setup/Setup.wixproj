@@ -48,6 +48,8 @@
   <ItemGroup>
     <Content Include="Components\Application.xslt" />
     <Content Include="Resources\Application.ico" />
+    <Content Include="Resources\Banner.bmp" />
+    <Content Include="Resources\Dialog.bmp" />
     <Content Include="Resources\License.rtf" />
   </ItemGroup>
   <ItemGroup>
