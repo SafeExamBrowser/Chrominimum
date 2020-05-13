@@ -16,7 +16,7 @@ Chrominimum requires the prerequisites listed below in order to work correctly. 
 
 | Aspect          | Status                                                                                                                | Details                                                         |
 | --------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| Release Build   | ![Release Build Status](https://sebdev-let.ethz.ch/api/projects/status/kq78qrjtnpk82ti0?svg=true)                     | https://sebdev-let.ethz.ch/project/appveyor/chrominimum         |
+| Release Build   | ![Release Build Status](https://sebdev-let.ethz.ch/api/projects/status/5yuvvwx3onppk8nt?svg=true)                     | https://sebdev-let.ethz.ch/project/appveyor/chrominimum         |
 | Issue Status    | ![GitHub Issues](https://img.shields.io/github/issues/safeexambrowser/chrominimum?logo=github)                        | https://github.com/SafeExamBrowser/chrominimum/issues           |
 | Downloads       | ![GitHub All Releases](https://img.shields.io/github/downloads/safeexambrowser/chrominimum/total?logo=github)         | https://github.com/SafeExamBrowser/chrominimum/releases         |
 | Development     | ![GitHub Last Commit](https://img.shields.io/github/last-commit/safeexambrowser/chrominimum?logo=github)              | n/a                                                             |
@@ -24,7 +24,12 @@ Chrominimum requires the prerequisites listed below in order to work correctly. 
 
 ### Usage
 
-Use the application configuration file or a command-line parameter to specify the start URL to be loaded initially. The command-line parameter takes precedence over the configuration file.
+Use a command-line parameter or the application configuration file to specify the start URL to be loaded initially. The command-line parameter takes precedence over the configuration file.
+
+**Command-Line**
+```
+Chrominimum.exe duckduckgo.com
+```
 
 **Chrominimum.exe.config**
 ```xml
@@ -35,9 +40,4 @@ Use the application configuration file or a command-line parameter to specify th
     </appSettings>
     ...
 </configuration>
-```
-
-**Command-Line**
-```
-Chrominimum.exe duckduckgo.com
 ```
