@@ -34,6 +34,7 @@ namespace Chrominimum
 			};
 
 			browser.DisplayHandler = new DisplayHandler(this);
+			browser.KeyboardHandler = new KeyboardHandler();
 			browser.LifeSpanHandler = new LifeSpanHandler();
 			browser.LoadError += Browser_LoadError;
 			browser.MenuHandler = new ContextMenuHandler();

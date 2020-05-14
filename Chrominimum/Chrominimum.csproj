@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="Handlers\ContextMenuHandler.cs" />
     <Compile Include="Handlers\DisplayHandler.cs" />
+    <Compile Include="Handlers\KeyboardHandler.cs" />
     <Compile Include="Handlers\LifeSpanHandler.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
