@@ -18,17 +18,19 @@ namespace Chrominimum
 		[STAThread]
 		public static void Main()
 		{
-			var settings = new CefSettings();
+			var appSettings = new AppSettings();
+			var cefSettings = new CefSettings();
 
-			settings.CefCommandLineArgs.Add("enable-media-stream");
+			appSettings.Initialize();
+			cefSettings.CefCommandLineArgs.Add("enable-media-stream");
 
-			var success = Cef.Initialize(settings, true, default(IApp));
+			var success = Cef.Initialize(cefSettings, true, default(IApp));
 
 			if (success)
 			{
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
-				Application.Run(new MainWindow());
+				Application.Run(new MainWindow(appSettings));
 			}
 			else
 			{

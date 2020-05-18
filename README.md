@@ -24,11 +24,11 @@ Chrominimum requires the prerequisites listed below in order to work correctly. 
 
 ### Usage
 
-Use a command-line parameter or the application configuration file to specify the start URL to be loaded initially. The command-line parameter takes precedence over the configuration file.
+Use a command-line parameter or the application configuration file to specify the URL to be loaded initially. The command-line parameter takes precedence over the configuration file and must always be the first parameter if used. Additionally, any of the optional parameters listed below may be used to control various features of the browser. Keyboard shortcuts F5 and CTRL+R reload the current page (if reloading is not disabled).
 
 **Command-Line**
 ```
-Chrominimum.exe duckduckgo.com
+Chrominimum.exe duckduckgo.com [optional parameters]
 ```
 
 **Chrominimum.exe.config**
@@ -41,3 +41,10 @@ Chrominimum.exe duckduckgo.com
     ...
 </configuration>
 ```
+
+| Parameter        | Effect                                                            |
+| ---------------- | ----------------------------------------------------------------- |
+| allow-navigation | Enables forward and backward navigation via the application menu. |
+| disable-reload   | Disables reloading (both via shortcuts and the application menu). |
+| hide-menu        | Hides the application menu.                                       |
+| maximized        | Opens the browser window maximized.                               |

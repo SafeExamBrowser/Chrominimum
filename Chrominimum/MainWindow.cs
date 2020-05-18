@@ -7,7 +7,6 @@
  */
 
 using System;
-using System.Configuration;
 using System.Drawing;
 using System.Windows.Forms;
 using CefSharp;
@@ -16,10 +15,15 @@ using Chrominimum.Handlers;
 
 namespace Chrominimum
 {
-	public partial class MainWindow : Form
+	internal partial class MainWindow : Form
 	{
-		public MainWindow()
+		private AppSettings settings;
+		private ChromiumWebBrowser browser;
+
+		internal MainWindow(AppSettings settings)
 		{
+			this.settings = settings;
+
 			InitializeComponent();
 		}
 
@@ -27,8 +31,14 @@ namespace Chrominimum
 		{
 			base.OnLoad(e);
 
-			var url = LoadStartUrl();
-			var browser = new ChromiumWebBrowser(url)
+			InitializeBrowser();
+			InitializeMenu();
+			InitializeWindow();
+		}
+
+		private void InitializeBrowser()
+		{
+			browser = new ChromiumWebBrowser(settings.StartUrl)
 			{
 				Dock = DockStyle.Fill
 			};
@@ -40,21 +50,57 @@ namespace Chrominimum
 			browser.MenuHandler = new ContextMenuHandler();
 			browser.TitleChanged += Browser_TitleChanged;
 
-			Height = Screen.PrimaryScreen.WorkingArea.Height;
-			Location = new Point(Screen.PrimaryScreen.WorkingArea.Width / 2, Screen.PrimaryScreen.WorkingArea.Top);
-			Width = Screen.PrimaryScreen.WorkingArea.Width / 2;
-
 			Controls.Add(browser);
 		}
 
-		private string LoadStartUrl()
+		private void InitializeMenu()
 		{
-			var configUrl = ConfigurationManager.AppSettings["StartUrl"];
-			var commandLineArgs = Environment.GetCommandLineArgs();
-			var commandLineUrl = commandLineArgs.Length > 1 ? commandLineArgs[1] : default(string);
-			var startUrl = string.IsNullOrWhiteSpace(commandLineUrl) ? configUrl : commandLineUrl;
+			if (settings.ShowMenu)
+			{
+				var actions = new MenuItem("Actions");
+				var help = new MenuItem("Help");
 
-			return startUrl;
+				Menu = new MainMenu();
+
+				if (settings.AllowNavigation)
+				{
+					actions.MenuItems.Add("Navigate backwards", (o, args) => browser.GetBrowser().GoBack());
+					actions.MenuItems.Add("Navigate forwards", (o, args) => browser.GetBrowser().GoForward());
+				}
+
+				if (settings.AllowReload)
+				{
+					actions.MenuItems.Add("Reload", (o, args) => browser.GetBrowser().Reload());
+				}
+
+				help.MenuItems.Add("Show version", (o, args) => ShowVersion());
+
+				if (settings.AllowNavigation || settings.AllowReload)
+				{
+					Menu.MenuItems.Add(actions);
+				}
+
+				Menu.MenuItems.Add(help);
+			}
+		}
+
+		private void InitializeWindow()
+		{
+			if (settings.ShowMaximized)
+			{
+				WindowState = FormWindowState.Maximized;
+			}
+			else
+			{
+				Height = Screen.PrimaryScreen.WorkingArea.Height;
+				Location = new Point(Screen.PrimaryScreen.WorkingArea.Width / 2, Screen.PrimaryScreen.WorkingArea.Top);
+				Width = Screen.PrimaryScreen.WorkingArea.Width / 2;
+			}
+		}
+
+		private void ShowVersion()
+		{
+			new VersionWindow().ShowDialog(this);
 		}
 
 		private void Browser_TitleChanged(object sender, TitleChangedEventArgs e)
