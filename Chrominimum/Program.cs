@@ -51,15 +51,19 @@ namespace Chrominimum
 
 				var audioSettings = new AudioSettings();
 				var audio = new Audio(audioSettings, new ModuleLogger(logger, nameof(Audio)));
+				audio.Initialize();
 				taskbar.AddSystemControl(uiFactory.CreateAudioControl(audio, Location.Taskbar));
 
 				var keyboard = new Keyboard(new ModuleLogger(logger, nameof(Keyboard)));
+				keyboard.Initialize();
 				taskbar.AddSystemControl(uiFactory.CreateKeyboardLayoutControl(keyboard, Location.Taskbar));
 
 				var powerSupply = new PowerSupply(new ModuleLogger(logger, nameof(PowerSupply)));
+				powerSupply.Initialize();
 				taskbar.AddSystemControl(uiFactory.CreatePowerSupplyControl(powerSupply, Location.Taskbar));
 
 				var wirelessAdapter = new WirelessAdapter(new ModuleLogger(logger, nameof(WirelessAdapter)));
+				wirelessAdapter.Initialize();
 				taskbar.AddSystemControl(uiFactory.CreateWirelessNetworkControl(wirelessAdapter, Location.Taskbar));
 
 				browser = new MainWindow(settings);
@@ -85,6 +89,7 @@ namespace Chrominimum
 		private void InitializeText()
 		{
 			text = new Text(new ModuleLogger(logger, nameof(Text)));
+			text.Initialize();
 		}
 
 	}
