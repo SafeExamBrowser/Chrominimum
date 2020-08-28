@@ -80,12 +80,12 @@ namespace SafeExamBrowser.UserInterface.Desktop
 
 		public IPasswordDialog CreatePasswordDialog(string message, string title)
 		{
-			return Application.Current.Dispatcher.Invoke(() => new PasswordDialog(message, title, text));
+			return new PasswordDialog(message, title, text);
 		}
 
 		public IPasswordDialog CreatePasswordDialog(TextKey message, TextKey title)
 		{
-			return Application.Current.Dispatcher.Invoke(() => new PasswordDialog(text.Get(message), text.Get(title), text));
+			return new PasswordDialog(text.Get(message), text.Get(title), text);
 		}
 
 		public ISystemControl CreatePowerSupplyControl(IPowerSupply powerSupply, Location location)

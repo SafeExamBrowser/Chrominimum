@@ -37,15 +37,20 @@ namespace Chrominimum
 		private MainWindow browser;
 		private ILogger logger;
 		private IText text;
+		private AppSettings appSettings;
 
 		private IUserInterfaceFactory uiFactory;
 		private ITaskbar taskbar;
 		private SebMessageBox.IMessageBox messageBox;
+		private HashAlgorithm hashAlgorithm;
 
 		internal SEBContext(AppSettings settings)
 		{
+				appSettings = settings;
 				logger = new Logger();
-				InitializeLogging(settings);
+				hashAlgorithm = new HashAlgorithm();
+
+				InitializeLogging(appSettings);
 				InitializeText();
 
 				uiFactory = new UserInterfaceFactory(text);
@@ -72,7 +77,7 @@ namespace Chrominimum
 				wirelessAdapter.Initialize();
 				taskbar.AddSystemControl(uiFactory.CreateWirelessNetworkControl(wirelessAdapter, Location.Taskbar));
 
-				browser = new MainWindow(settings);
+				browser = new MainWindow(appSettings);
 				browser.Show();
 		}
 
@@ -88,7 +93,18 @@ namespace Chrominimum
 
 		private bool TryInitiateShutdown()
 		{
-			var requestShutdown = TryConfirmShutdown();
+			var hasQuitPassword = !string.IsNullOrEmpty(appSettings.QuitPasswordHash);
+			var requestShutdown = false;
+
+			if (hasQuitPassword)
+			{
+				requestShutdown = TryValidateQuitPassword();
+			}
+			else
+			{
+				requestShutdown = TryConfirmShutdown();
+			}
+
 			if (requestShutdown)
 			{
 				ClosingSeqence();
@@ -109,6 +125,32 @@ namespace Chrominimum
 			}
 
 			return quit;
+		}
+
+		private bool TryValidateQuitPassword()
+		{
+			var dialog = uiFactory.CreatePasswordDialog(TextKey.PasswordDialog_QuitPasswordRequired, TextKey.PasswordDialog_QuitPasswordRequiredTitle);
+			var result = dialog.Show();
+
+			if (result.Success)
+			{
+				var passwordHash = hashAlgorithm.GenerateHashFor(result.Password);
+				var isCorrect = appSettings.QuitPasswordHash.Equals(passwordHash, StringComparison.OrdinalIgnoreCase);
+
+				if (isCorrect)
+				{
+					logger.Info("The user entered the correct quit password, the application will now terminate.");
+				}
+				else
+				{
+					logger.Info("The user entered the wrong quit password.");
+					messageBox.Show(TextKey.MessageBox_InvalidQuitPassword,  TextKey.MessageBox_InvalidQuitPasswordTitle, icon: SebMessageBox.MessageBoxIcon.Warning);
+				}
+
+				return isCorrect;
+			}
+
+			return false;
 		}
 
 		private void InitializeLogging(AppSettings settings)
