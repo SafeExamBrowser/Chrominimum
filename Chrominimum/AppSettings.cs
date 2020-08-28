@@ -49,7 +49,7 @@ namespace Chrominimum
 		internal string LogDir { get; set; }
 		internal DateTime StartTime { get; set; }
 
-		internal const string AppName = "SEB-light";
+		internal const string AppName = "SEBLight";
 
 		internal void Initialize()
 		{
