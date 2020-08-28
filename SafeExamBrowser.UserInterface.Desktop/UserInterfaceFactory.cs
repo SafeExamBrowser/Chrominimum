@@ -36,7 +36,7 @@ namespace SafeExamBrowser.UserInterface.Desktop
 		{
 			this.text = text;
 
-			// InitializeFontAwesome();
+			InitializeFontAwesome();
 		}
 
 		public ISystemControl CreateAudioControl(IAudio audio, Location location)

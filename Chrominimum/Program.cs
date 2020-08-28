@@ -22,6 +22,10 @@ using SafeExamBrowser.UserInterface.Desktop;
 
 using SafeExamBrowser.Settings.SystemComponents;
 using SafeExamBrowser.SystemComponents.Audio;
+using SafeExamBrowser.SystemComponents.Keyboard;
+using SafeExamBrowser.SystemComponents.PowerSupply;
+using SafeExamBrowser.SystemComponents.WirelessNetwork;
+
 
 namespace Chrominimum
 {
@@ -47,6 +51,16 @@ namespace Chrominimum
 
 				var audioSettings = new AudioSettings();
 				var audio = new Audio(audioSettings, new ModuleLogger(logger, nameof(Audio)));
+				taskbar.AddSystemControl(uiFactory.CreateAudioControl(audio, Location.Taskbar));
+
+				var keyboard = new Keyboard(new ModuleLogger(logger, nameof(Keyboard)));
+				taskbar.AddSystemControl(uiFactory.CreateKeyboardLayoutControl(keyboard, Location.Taskbar));
+
+				var powerSupply = new PowerSupply(new ModuleLogger(logger, nameof(PowerSupply)));
+				taskbar.AddSystemControl(uiFactory.CreatePowerSupplyControl(powerSupply, Location.Taskbar));
+
+				var wirelessAdapter = new WirelessAdapter(new ModuleLogger(logger, nameof(WirelessAdapter)));
+				taskbar.AddSystemControl(uiFactory.CreateWirelessNetworkControl(wirelessAdapter, Location.Taskbar));
 
 				browser = new MainWindow(settings);
 				browser.Show();
@@ -90,6 +104,8 @@ namespace Chrominimum
 
 			if (success)
 			{
+				string s = System.IO.Packaging.PackUriHelper.UriSchemePack;
+
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
 				Application.Run(new SEBContext(appSettings));
