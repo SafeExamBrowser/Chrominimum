@@ -7,6 +7,7 @@
  */
 
 using System;
+using System.IO;
 using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
@@ -37,7 +38,7 @@ namespace Chrominimum
 		internal SEBContext(AppSettings settings)
 		{
 				logger = new Logger();
-				InitializeLogging();
+				InitializeLogging(settings);
 				InitializeText();
 
 				uiFactory = new UserInterfaceFactory(text);
@@ -57,9 +58,10 @@ namespace Chrominimum
 			ExitThread();
 		}
 
-		private void InitializeLogging()
+		private void InitializeLogging(AppSettings settings)
 		{
-			var runtimeLog = "c:\\tmp\\seb-light\\runtime.log.txt";
+			var logFilePrefix = settings.StartTime.ToString("yyyy-MM-dd\\_HH\\hmm\\mss\\s");
+			var runtimeLog = Path.Combine(settings.LogDir, $"{logFilePrefix}_Runtime.log");
 			var logFileWriter = new LogFileWriter(new DefaultLogFormatter(), runtimeLog);
 
 			logFileWriter.Initialize();
