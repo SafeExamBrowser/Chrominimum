@@ -11,8 +11,68 @@ using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
 
+using SafeExamBrowser.I18n;
+using SafeExamBrowser.I18n.Contracts;
+using SafeExamBrowser.Logging;
+using SafeExamBrowser.Logging.Contracts;
+using SafeExamBrowser.UserInterface.Contracts;
+using SafeExamBrowser.UserInterface.Contracts.Shell;
+using SafeExamBrowser.UserInterface.Desktop;
+
+using SafeExamBrowser.Settings.SystemComponents;
+using SafeExamBrowser.SystemComponents.Audio;
+
 namespace Chrominimum
 {
+
+	internal class SEBContext : ApplicationContext
+	{
+		private MainWindow browser;
+		private ILogger logger;
+		private IText text;
+
+		private IUserInterfaceFactory uiFactory;
+		private ITaskbar taskbar;
+
+		internal SEBContext(AppSettings settings)
+		{
+				logger = new Logger();
+				InitializeLogging();
+				InitializeText();
+
+				uiFactory = new UserInterfaceFactory(text);
+				taskbar = uiFactory.CreateTaskbar(logger);
+				taskbar.Show();
+
+				var audioSettings = new AudioSettings();
+				var audio = new Audio(audioSettings, new ModuleLogger(logger, nameof(Audio)));
+
+				browser = new MainWindow(settings);
+				browser.Show();
+				browser.Closed += new EventHandler(OnBrowserClosed);
+		}
+
+		private void OnBrowserClosed(object sender, EventArgs e)
+		{
+			ExitThread();
+		}
+
+		private void InitializeLogging()
+		{
+			var runtimeLog = "c:\\tmp\\seb-light\\runtime.log.txt";
+			var logFileWriter = new LogFileWriter(new DefaultLogFormatter(), runtimeLog);
+
+			logFileWriter.Initialize();
+			logger.Subscribe(logFileWriter);
+		}
+
+		private void InitializeText()
+		{
+			text = new Text(new ModuleLogger(logger, nameof(Text)));
+		}
+
+	}
+
 	public static class Program
 	{
 		[STAThread]
@@ -30,7 +90,7 @@ namespace Chrominimum
 			{
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
-				Application.Run(new MainWindow(appSettings));
+				Application.Run(new SEBContext(appSettings));
 			}
 			else
 			{

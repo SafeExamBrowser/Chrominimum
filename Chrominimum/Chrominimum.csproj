@@ -116,6 +116,52 @@
     <Content Include="Icon.ico" />
     <EmbeddedResource Include="Logo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SafeExamBrowser.Settings\SafeExamBrowser.Settings.csproj">
+      <Project>{30b2d907-5861-4f39-abad-c4abf1b3470e}</Project>
+      <Name>SafeExamBrowser.Settings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SafeExamBrowser.Logging.Contracts\SafeExamBrowser.Logging.Contracts.csproj">
+      <Project>{64ea30fb-11d4-436a-9c2b-88566285363e}</Project>
+      <Name>SafeExamBrowser.Logging.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SafeExamBrowser.Logging\SafeExamBrowser.Logging.csproj">
+      <Project>{e107026c-2011-4552-a7d8-3a0d37881df6}</Project>
+      <Name>SafeExamBrowser.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SafeExamBrowser.UserInterface.Contracts\SafeExamBrowser.UserInterface.Contracts.csproj">
+      <Project>{c7889e97-6ff6-4a58-b7cb-521ed276b316}</Project>
+      <Name>SafeExamBrowser.UserInterface.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SafeExamBrowser.UserInterface.Desktop\SafeExamBrowser.UserInterface.Desktop.csproj">
+      <Project>{A502DF54-7169-4647-94BD-18B192924866}</Project>
+      <Name>SafeExamBrowser.UserInterface.Desktop</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SafeExamBrowser.UserInterface.Contracts\SafeExamBrowser.UserInterface.Contracts.csproj">
+      <Project>{c7889e97-6ff6-4a58-b7cb-521ed276b316}</Project>
+      <Name>SafeExamBrowser.UserInterface.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SafeExamBrowser.I18n.Contracts\SafeExamBrowser.I18n.Contracts.csproj">
+      <Project>{1858ddf3-bc2a-4bff-b663-4ce2ffeb8b7d}</Project>
+      <Name>SafeExamBrowser.I18n.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SafeExamBrowser.I18n\SafeExamBrowser.I18n.csproj">
+      <Project>{10c62628-8e6a-45aa-9d97-339b119ad21d}</Project>
+      <Name>SafeExamBrowser.I18n</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SafeExamBrowser.Settings\SafeExamBrowser.Settings.csproj">
+      <Project>{30b2d907-5861-4f39-abad-c4abf1b3470e}</Project>
+      <Name>SafeExamBrowser.Settings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SafeExamBrowser.SystemComponents.Contracts\SafeExamBrowser.SystemComponents.Contracts.csproj">
+      <Project>{903129c6-e236-493b-9ad6-c6a57f647a3a}</Project>
+      <Name>SafeExamBrowser.SystemComponents.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SafeExamBrowser.SystemComponents\SafeExamBrowser.SystemComponents.csproj">
+      <Project>{ACEE2EF1-14D2-4B52-8994-5C053055BB51}</Project>
+      <Name>SafeExamBrowser.SystemComponents</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
