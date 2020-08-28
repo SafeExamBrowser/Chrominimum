@@ -27,6 +27,18 @@ namespace Chrominimum
 			InitializeComponent();
 		}
 
+		private const int CP_NOCLOSE_BUTTON = 0x200;
+
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ClassStyle |= CP_NOCLOSE_BUTTON;
+				return cp;
+			}
+		}
+
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);

@@ -7,6 +7,7 @@
  */
 
 using System;
+using System.IO;
 using System.Configuration;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -28,6 +29,9 @@ namespace Chrominimum
 		[Option("hide-menu", Default=false, Required = false)]
 		public bool HideMenu { get; set; }
 
+		[Option("logdir", Required = false)]
+		public string LogDir { get; set; }
+
 		[Value(0)]
 		public string ProgramName { get; set; }
 
@@ -42,9 +46,17 @@ namespace Chrominimum
 		internal bool ShowMaximized { get; set; }
 		internal bool ShowMenu { get; set; }
 		internal string StartUrl { get; set; }
+		internal string LogDir { get; set; }
+		internal DateTime StartTime { get; set; }
+
+		internal const string AppName = "SEBLight";
 
 		internal void Initialize()
 		{
+			var appDataLocalFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AppName);
+			// StartTime = ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds().ToString();
+			StartTime = DateTime.Now;
+
 			var result = Parser.Default.ParseArguments<Options>(Environment.GetCommandLineArgs())
 				.WithParsed(options => {
 						AllowNavigation = options.AllowNavigation;
@@ -54,6 +66,9 @@ namespace Chrominimum
 						StartUrl = !String.IsNullOrEmpty(options.StartUrl) && IsValidStartUrl(options.StartUrl)
 							? options.StartUrl
 							: ConfigurationManager.AppSettings["StartUrl"];
+						LogDir = !String.IsNullOrEmpty(options.LogDir)
+							? options.LogDir
+							: Path.Combine(appDataLocalFolder, "Logs");
 					});
 
 			var args = Environment.GetCommandLineArgs();
