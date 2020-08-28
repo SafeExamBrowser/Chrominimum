@@ -19,6 +19,8 @@ using SafeExamBrowser.Logging.Contracts;
 using SafeExamBrowser.UserInterface.Contracts;
 using SafeExamBrowser.UserInterface.Contracts.Shell;
 using SafeExamBrowser.UserInterface.Desktop;
+using SebMessageBox = SafeExamBrowser.UserInterface.Contracts.MessageBox;
+
 
 using SafeExamBrowser.Settings.SystemComponents;
 using SafeExamBrowser.SystemComponents.Audio;
@@ -38,6 +40,7 @@ namespace Chrominimum
 
 		private IUserInterfaceFactory uiFactory;
 		private ITaskbar taskbar;
+		private SebMessageBox.IMessageBox messageBox;
 
 		internal SEBContext(AppSettings settings)
 		{
@@ -46,7 +49,10 @@ namespace Chrominimum
 				InitializeText();
 
 				uiFactory = new UserInterfaceFactory(text);
+				messageBox = new MessageBoxFactory(text);
+
 				taskbar = uiFactory.CreateTaskbar(logger);
+				taskbar.QuitButtonClicked += Shell_QuitButtonClicked;
 				taskbar.Show();
 
 				var audioSettings = new AudioSettings();
@@ -68,12 +74,41 @@ namespace Chrominimum
 
 				browser = new MainWindow(settings);
 				browser.Show();
-				browser.Closed += new EventHandler(OnBrowserClosed);
 		}
 
-		private void OnBrowserClosed(object sender, EventArgs e)
+		private void ClosingSeqence()
 		{
 			ExitThread();
+		}
+
+		private void Shell_QuitButtonClicked(System.ComponentModel.CancelEventArgs args)
+		{
+			args.Cancel = !TryInitiateShutdown();
+		}
+
+		private bool TryInitiateShutdown()
+		{
+			var requestShutdown = TryConfirmShutdown();
+			if (requestShutdown)
+			{
+				ClosingSeqence();
+			}
+
+			return false;
+		}
+
+		private bool TryConfirmShutdown()
+		{
+			var result = messageBox.Show(TextKey.MessageBox_Quit, TextKey.MessageBox_QuitTitle,
+					SebMessageBox.MessageBoxAction.YesNo, SebMessageBox.MessageBoxIcon.Question);
+			var quit = result == SebMessageBox.MessageBoxResult.Yes;
+
+			if (quit)
+			{
+				logger.Info("The user chose to terminate the application.");
+			}
+
+			return quit;
 		}
 
 		private void InitializeLogging(AppSettings settings)
