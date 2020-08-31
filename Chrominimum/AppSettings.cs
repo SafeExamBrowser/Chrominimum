@@ -32,6 +32,9 @@ namespace Chrominimum
 		[Option("logdir", Required = false)]
 		public string LogDir { get; set; }
 
+		[Option("quitPasswordHash", Required = false)]
+		public string QuitPasswordHash { get; set; }
+
 		[Value(0)]
 		public string ProgramName { get; set; }
 
@@ -48,6 +51,7 @@ namespace Chrominimum
 		internal string StartUrl { get; set; }
 		internal string LogDir { get; set; }
 		internal DateTime StartTime { get; set; }
+		internal string QuitPasswordHash { get; set; }
 
 		internal const string AppName = "SEBLight";
 
@@ -69,6 +73,7 @@ namespace Chrominimum
 						LogDir = !String.IsNullOrEmpty(options.LogDir)
 							? options.LogDir
 							: Path.Combine(appDataLocalFolder, "Logs");
+						QuitPasswordHash = options.QuitPasswordHash;
 					});
 
 			var args = Environment.GetCommandLineArgs();
