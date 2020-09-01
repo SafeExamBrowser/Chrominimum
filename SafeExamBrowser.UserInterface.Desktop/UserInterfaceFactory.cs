@@ -6,6 +6,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
@@ -111,8 +115,13 @@ namespace SafeExamBrowser.UserInterface.Desktop
 		private void InitializeFontAwesome()
 		{
 			// To be able to use FontAwesome in XAML icon resources, we need to make sure that the FontAwesome.WPF assembly is loaded into
-			// the AppDomain before attempting to load an icon resource - thus the creation of an unused image below...
-			ImageAwesome.CreateImageSource(FontAwesomeIcon.FontAwesome, Brushes.Black);
+			// the AppDomain before attempting to load an icon resource
+
+			var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
+			var loadedPaths = loadedAssemblies.Select(a => a.Location).ToArray();
+			var referencedPaths = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "FontAwesome*.dll");
+			var toLoad = referencedPaths.Where(r => !loadedPaths.Contains(r, StringComparer.InvariantCultureIgnoreCase)).ToList();
+			toLoad.ForEach(path => loadedAssemblies.Add(AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(path))));
 		}
 	}
 }
