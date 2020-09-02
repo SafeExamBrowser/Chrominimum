@@ -38,7 +38,7 @@
 			this.ClientSize = new System.Drawing.Size(734, 461);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "MainWindow";
-			this.Text = "Chrominimum";
+			this.Text = "Inspera SEB";
 			this.ResumeLayout(false);
 
 		}
