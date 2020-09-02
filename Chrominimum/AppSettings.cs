@@ -26,9 +26,6 @@ namespace Chrominimum
 		[Option("maximized", Default=false, Required = false)]
 		public bool ShowMaximized { get; set; }
 
-		[Option("hide-menu", Default=false, Required = false)]
-		public bool HideMenu { get; set; }
-
 		[Option("logdir", Required = false)]
 		public string LogDir { get; set; }
 
@@ -65,7 +62,7 @@ namespace Chrominimum
 				.WithParsed(options => {
 						AllowNavigation = options.AllowNavigation;
 						AllowReload = !options.DisableReload;
-						ShowMenu = !options.HideMenu;
+						ShowMenu = false;
 						ShowMaximized = options.ShowMaximized;
 						StartUrl = !String.IsNullOrEmpty(options.StartUrl) && IsValidStartUrl(options.StartUrl)
 							? options.StartUrl

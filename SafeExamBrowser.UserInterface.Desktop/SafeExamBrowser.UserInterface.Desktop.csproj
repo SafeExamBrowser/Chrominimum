@@ -340,7 +340,7 @@
     <Resource Include="Images\LogNotification.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\SafeExamBrowser.ico" />
+    <Resource Include="Images\Inspera.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\SplashScreen.png" />
