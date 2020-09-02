@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SafeExamBrowser.UserInterface.Desktop"
         xmlns:s="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d" Background="White" Foreground="Black" Height="500" Width="850" WindowStyle="None" WindowStartupLocation="CenterScreen"
-        Icon="../Images/SafeExamBrowser.ico" ResizeMode="NoResize" Title="Safe Exam Browser" Topmost="True">
+        Icon="../Images/Inspera.ico" ResizeMode="NoResize" Title="Safe Exam Browser" Topmost="True">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

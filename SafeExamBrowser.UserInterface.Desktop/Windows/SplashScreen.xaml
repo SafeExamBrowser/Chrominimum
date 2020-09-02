@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SafeExamBrowser.UserInterface.Desktop"
         mc:Ignorable="d"
         Title="SplashScreen" Background="White" Height="200" Width="350" WindowStyle="None" WindowStartupLocation="CenterScreen"
-        Cursor="Wait" Icon="../Images/SafeExamBrowser.ico" ResizeMode="NoResize" Topmost="True">
+        Cursor="Wait" Icon="../Images/Inspera.ico" ResizeMode="NoResize" Topmost="True">
     <Border BorderBrush="DodgerBlue" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
