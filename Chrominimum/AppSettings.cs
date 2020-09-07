@@ -8,37 +8,46 @@
 
 using System;
 using System.Configuration;
-using System.Linq;
 using System.Text.RegularExpressions;
+using CommandLine;
 
 namespace Chrominimum
 {
 	internal class AppSettings
 	{
-		internal bool AllowReload { get; set; }
-		internal bool AllowNavigation { get; set; }
-		internal bool ShowMaximized { get; set; }
-		internal bool ShowMenu { get; set; }
-		internal string StartUrl { get; set; }
+		[Option("allow-reload", HelpText = "Determines whether the user may reload the current page.")]
+		public bool AllowReload { get; set; }
+
+		[Option("allow-navigation", HelpText = "Determines whether the user may navigate the browser history.")]
+		public bool AllowNavigation { get; set; }
+
+		[Option("show-maximized", HelpText = "Determines whether the browser window will be maximized on startup.")]
+		public bool ShowMaximized { get; set; }
+
+		[Option("show-menu", HelpText = "Determines whether the user may access the browser menu.")]
+		public bool ShowMenu { get; set; }
+
+		[Option("start-url", HelpText = "The initial URL to be loaded on startup.")]
+		public string StartUrl { get; set; }
+
+		[Option("user-agent-suffix", HelpText = "A suffix to be appended to the user agent of the browser.")]
+		public string UserAgentSuffix { get; set; }
 
 		internal void Initialize()
 		{
-			var args = Environment.GetCommandLineArgs();
-
-			AllowNavigation = args.Any(a => a.Equals("allow-navigation"));
-			AllowReload = args.All(a => !a.Equals("disable-reload"));
-			ShowMaximized = args.Any(a => a.Equals("maximized"));
-			ShowMenu = args.All(a => !a.Equals("hide-menu"));
-			StartUrl = args.Length > 1 && IsValidStartUrl(args[1]) ? args[1] : ConfigurationManager.AppSettings["StartUrl"];
+			StartUrl = IsValidStartUrl(StartUrl) ? StartUrl : ConfigurationManager.AppSettings["StartUrl"];
 		}
 
 		private bool IsValidStartUrl(string value)
 		{
 			var valid = false;
 
-			valid |= Regex.IsMatch(value, @".+\..+");
-			valid |= Regex.IsMatch(value, @".+\..+\..+");
-			valid |= Uri.IsWellFormedUriString(value, UriKind.Absolute);
+			if (!string.IsNullOrWhiteSpace(value))
+			{
+				valid |= Regex.IsMatch(value, @".+\..+");
+				valid |= Regex.IsMatch(value, @".+\..+\..+");
+				valid |= Uri.IsWellFormedUriString(value, UriKind.Absolute);
+			}
 
 			return valid;
 		}
