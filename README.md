@@ -24,11 +24,11 @@ Chrominimum requires the prerequisites listed below in order to work correctly. 
 
 ### Usage
 
-Use a command-line parameter or the application configuration file to specify the URL to be loaded initially. The command-line parameter takes precedence over the configuration file and must always be the first parameter if used. Additionally, any of the optional parameters listed below may be used to control various features of the browser. Keyboard shortcuts F5 and CTRL+R reload the current page (if reloading is not disabled).
+Use a command-line parameter or the application configuration file to specify the URL to be loaded initially. The command-line parameter for the URL takes precedence over the configuration file parameter. Additionally, any of the optional parameters listed below may be used to control various features of the browser. Keyboard shortcuts F5 and CTRL+R reload the current page (if reloading is enabled).
 
 **Command-Line**
 ```
-Chrominimum.exe duckduckgo.com [optional parameters]
+Chrominimum.exe --start-url=duckduckgo.com [other optional parameters]
 ```
 
 **Chrominimum.exe.config**
@@ -42,9 +42,11 @@ Chrominimum.exe duckduckgo.com [optional parameters]
 </configuration>
 ```
 
-| Parameter        | Effect                                                            |
-| ---------------- | ----------------------------------------------------------------- |
-| allow-navigation | Enables forward and backward navigation via the application menu. |
-| disable-reload   | Disables reloading (both via shortcuts and the application menu). |
-| hide-menu        | Hides the application menu.                                       |
-| maximized        | Opens the browser window maximized.                               |
+| Parameter                 | Effect                                                                  |
+| ------------------------- | ----------------------------------------------------------------------- |
+| --allow-navigation        | Enables forward and backward navigation via the application menu.       |
+| --allow-reload            | Enables reloading of the current page (both via shortcut and the menu). |
+| --show-maximized          | Opens the browser window maximized.                                     |
+| --show-menu               | Shows the application menu.                                             |
+| --start-url="..."         | The URL to be loaded initially.                                         |
+| --user-agent-suffix="..." | A suffix for the user agent of the browser.                             |

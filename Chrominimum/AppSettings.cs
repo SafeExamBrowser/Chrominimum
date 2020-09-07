@@ -15,11 +15,11 @@ namespace Chrominimum
 {
 	internal class AppSettings
 	{
-		[Option("allow-reload", HelpText = "Determines whether the user may reload the current page.")]
-		public bool AllowReload { get; set; }
-
 		[Option("allow-navigation", HelpText = "Determines whether the user may navigate the browser history.")]
 		public bool AllowNavigation { get; set; }
+
+		[Option("allow-reload", HelpText = "Determines whether the user may reload the current page.")]
+		public bool AllowReload { get; set; }
 
 		[Option("show-maximized", HelpText = "Determines whether the browser window will be maximized on startup.")]
 		public bool ShowMaximized { get; set; }
