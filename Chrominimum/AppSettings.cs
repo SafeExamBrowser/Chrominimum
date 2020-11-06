@@ -30,6 +30,9 @@ namespace Chrominimum
 		[Option("start-url", HelpText = "The initial URL to be loaded on startup.")]
 		public string StartUrl { get; set; }
 
+		[Option("store-cache", HelpText = "Stores the browser cache on disk.")]
+		public bool StoreCache { get; set; }
+
 		[Option("user-agent-suffix", HelpText = "A suffix to be appended to the user agent of the browser.")]
 		public string UserAgentSuffix { get; set; }
 

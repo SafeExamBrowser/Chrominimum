@@ -49,4 +49,5 @@ Chrominimum.exe --start-url=duckduckgo.com [other optional parameters]
 | --show-maximized          | Opens the browser window maximized.                                     |
 | --show-menu               | Shows the application menu.                                             |
 | --start-url="..."         | The URL to be loaded initially.                                         |
+| --store-cache             | Stores the browser cache on disk.                                       |
 | --user-agent-suffix="..." | A suffix for the user agent of the browser.                             |

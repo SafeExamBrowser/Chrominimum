@@ -7,6 +7,7 @@
  */
 
 using System;
+using System.IO;
 using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
@@ -27,7 +28,13 @@ namespace Chrominimum
 
 			appSettings.Initialize();
 
+			if (appSettings.StoreCache)
+			{
+				cefSettings.CachePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), nameof(Chrominimum), "Cache");
+			}
+
 			cefSettings.CefCommandLineArgs.Add("enable-media-stream");
+			cefSettings.PersistSessionCookies = false;
 			cefSettings.UserAgent = $"Mozilla/5.0 (Windows NT {osVersion}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/{Cef.ChromiumVersion} {appSettings.UserAgentSuffix}";
 
 			var success = Cef.Initialize(cefSettings, true, default(IApp));
